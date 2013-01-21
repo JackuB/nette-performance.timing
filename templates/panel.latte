@@ -1,0 +1,86 @@
+{**
+ * performance.timing for Debugger Bar Panel (layout and JS)
+ *
+ * @author Jakub Mikuláš <jakub@jedenbod.cz>
+ *
+ *}
+
+<script>
+(function() {
+    window.onload=function() {
+        if (typeof performance != 'undefined') {
+            setTimeout(function(){
+                var perfStart = performance.timing.navigationStart;
+                var perfReqStart = performance.timing.requestStart;
+                var perfResStart = performance.timing.responseStart;
+                var perfResEnd = performance.timing.responseEnd;
+                var perfDomLoading = performance.timing.domLoading;
+                var perfDomInter = performance.timing.domInteractive;
+                var perfLoadStart = performance.timing.loadEventStart;
+                var perfLoadEnd = performance.timing.loadEventEnd;
+
+                var redirectTime = perfReqStart - perfStart;
+                var requestTime = perfResStart - perfReqStart;
+                var responseTime = perfResEnd - perfResStart;
+                var domProcessingTime = perfDomInter - perfDomLoading;
+                var domLoadingTime = perfLoadStart - perfDomInter;
+                var loadEventTime = '';
+                if(perfLoadEnd > 0) {
+                    loadEventTime = perfLoadEnd - perfLoadStart;
+                } else {
+                    loadEventTime = 0;
+                }
+
+                var totalTime = redirectTime + requestTime + responseTime + domProcessingTime + domLoadingTime + loadEventTime;
+                document.getElementById('NetteDebuggerBarPerformanceTiming').innerHTML = totalTime + 'ms';
+
+                document.getElementById('NetteDebuggerBarPerformanceTimingredirectTime').innerHTML = redirectTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingrequestTime').innerHTML = requestTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingresponseTime').innerHTML = responseTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingdomProcessingTime').innerHTML = domProcessingTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingdomLoadingTime').innerHTML = domLoadingTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingloadEventTime').innerHTML = loadEventTime;
+                document.getElementById('NetteDebuggerBarPerformanceTimingtotalTime').innerHTML = totalTime;
+            }, 20);
+        }
+    };
+}());
+</script>
+
+
+<h1>
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUFDRTBBRjQ2MzVDMTFFMkE5QzZBQzZDNzIxMDY3RjEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NUFDRTBBRjU2MzVDMTFFMkE5QzZBQzZDNzIxMDY3RjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1QUNFMEFGMjYzNUMxMUUyQTlDNkFDNkM3MjEwNjdGMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1QUNFMEFGMzYzNUMxMUUyQTlDNkFDNkM3MjEwNjdGMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pkb3WwYAAADWSURBVHjaYmDABGZAPAuI7wPxLyi+DxUzY8AD+IB4KRD/J4CXQtViaD4JVfAHiOcDsSMQi0OxI1TsD1TNSXRDYDa/BmJrJHGYrQJQvjVUDcwlcD/DbLZGcxm6ATBDYC4Bh8ksKGc+lnDBZgADVO1/qF5wCP+H+pNYAxyh4iC94Gj6Dw0sYg0Qh4r/YmIgDoQDMTMuSXxeuIDkimtAHIDuBZALdkMF47AYYATEsUD8EIg1kQyAqd1NKBphgA2I46E0RjTiS0joAGtCokpSpjgzkZ2dAQIMAN3pZYeHRhifAAAAAElFTkSuQmCC" style="vertical-align: middle; position: relative; top: -4px; left: -2px;"/>
+	performance.timing
+</h1>
+<div>
+	<table>
+		<tr>
+			<th title="">redirectTime</th>
+			<td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingredirectTime"><em>Wait</em></div> ms</td>
+		</tr>
+        <tr>
+            <th title="">requestTime</th>
+            <td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingrequestTime"><em>Wait</em></div> ms</td>
+        </tr>
+        <tr>
+            <th title="">responseTime</th>
+            <td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingresponseTime"><em>Wait</em></div> ms</td>
+        </tr>
+        <tr>
+            <th title="">domProcessingTime</th>
+            <td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingdomProcessingTime"><em>Wait</em></div> ms</td>
+        </tr>
+        <tr>
+            <th title="">domLoadingTime</th>
+            <td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingdomLoadingTime"><em>Wait</em></div> ms</td>
+        </tr>
+        <tr>
+            <th title="">loadEventTime</th>
+            <td style='text-align: right;'><div id="NetteDebuggerBarPerformanceTimingloadEventTime"><em>Wait</em></div> ms</td>
+        </tr>
+		<tr>
+			<th style='color: green;'>&sum;</th>
+			<td style='color: green; text-align: right; border-top: 3px double #888;'><div id="NetteDebuggerBarPerformanceTimingtotalTime"><em>Wait</em></div> ms</td>
+		</tr>
+	</table>
+</div>
