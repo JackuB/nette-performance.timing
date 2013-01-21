@@ -7,7 +7,7 @@
 final class performanceTiming extends \Nette\Application\UI\Control implements \Nette\Diagnostics\IBarPanel
 {
 	/**
-	 * Html code for Debugger Bar Panel
+	 * Html code for Debugger Bar Tab
 	 * @author Jakub Mikuláš <jakub@jedenbod.cz>
 	 * @return string
 	 */
